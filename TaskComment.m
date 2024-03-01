@@ -78,7 +78,7 @@ switch event
     case 'stop'
         eventCode = '$TASKSTOP ';
         eventColor = 16711935;
-        updateSuccessLogEntry()
+%         updateSuccessLogEntry()
     case 'kill'
         eventCode = '$TASKKILL ';
         eventColor = 255;

@@ -21,10 +21,11 @@ end
         emu_id_new = emu_id_prev + 1;
         
         Task_ID = newEntry;
-        success_id = 0;
+%         success_id = 0;
         
         
-        new_row = cell2table({emu_id_new,Task_ID,success_id},"VariableNames", ["emu_id","task_id","success_id"]);
+%         new_row = cell2table({emu_id_new,Task_ID,success_id},"VariableNames", ["emu_id","task_id","success_id"]);
+        new_row = cell2table({emu_id_new,Task_ID},"VariableNames", ["emu_id","task_id"]);
         T = [T;new_row];
         writetable(T,fullfile(tableFile.folder,tableFile.name));
     end

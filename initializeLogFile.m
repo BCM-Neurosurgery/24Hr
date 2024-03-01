@@ -22,9 +22,10 @@ end
 %% 
 emu_id = 0;
 task_id = 'Initialize Log';
-success_id = 1;
+% success_id = 1;
 
 %%
-T = cell2table({emu_id,task_id,success_id},"VariableNames", ["emu_id","task_id","success_id"]);
+% T = cell2table({emu_id,task_id,success_id},"VariableNames", ["emu_id","task_id","success_id"]);
+T = cell2table({emu_id,task_id},"VariableNames", ["emu_id","task_id"]);
 logFilename = [subjID,'_log.csv'];
 writetable(T,fullfile(logFolder,logFilename));
