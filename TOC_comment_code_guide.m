@@ -16,20 +16,20 @@
 filename ='whatever';
 
 %[onlineNSP,~,~]=StartBlackrockAquisition(filename); %changed 02/22/2024 for TOC mode
-onlineNSP=TaskComment(filename,'start'); 
+onlineNSP=TaskComment('start',filename); 
 
 %StopBlackrockAquisition(filename,onlineNSP); %changed 02/22/2024 for TOC mode
-TaskComment(filename,'stop'); 
+TaskComment('stop',filename); 
 
 %% if you have additional stops for abort and errors:
 
 %StopBlackrockAquisition(filename,onlineNSP); %changed 02/22/2024 for TOC mode
 
 % if you have an abort function, use this to mark the manual stop there:
-TaskComment(filename,'kill'); 
+TaskComment('kill',filename); 
 
 % if you have your whole code in a try/catch, place this in the catch
-TaskComment(filename,'error'); 
+TaskComment('error',filename); 
 
 %% special section: if you are sendng comments for trials or other events information between your start and stop
 % here is how you can make sure that these are getting sent to both NSPs
