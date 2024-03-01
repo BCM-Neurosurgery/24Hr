@@ -29,11 +29,18 @@ function [onlineNSP] = TaskComment(event,filename)
 %
 % Author: Joshua Adkinson
 
+if nargin==1
+    filename = '';
+end
+
+%% Get IP Addresses of NSP ethernet ports
 % address = {'192.168.137.3','192.168.137.178'};
 address = getIPAddressesFromPortNames({'NSP1','NSP2'});
 
+
 %% Strip away any filepath/file extention information
 [~,filename] = fileparts(filename);
+
 
 %% Find/Open Connections to Available Blackrock NSPs
 availableNSPs = zeros(size(address));
@@ -47,6 +54,7 @@ for i=1:length(address)
     availableNSPs(i) = 1;
 end
 onlineNSP = find(availableNSPs==1);
+
 
 %% Blackrock Filename EMUNumber/Suffix Check
 emuStr = regexp(filename,'EMU-\d+','match');
@@ -62,17 +70,20 @@ else
     emuStr = emuStr{1};
 end
 
+
 if numel(onlineNSP)==1
     suffix = {[]};
 else
     suffix = strcat(repmat({'_NSP-'},numel(onlineNSP),1),cellstr(num2str(onlineNSP(:))));
 end
 
+
 %% Check Character Length
 commentLength = numel([filename,suffix{1}])+7;
 if commentLength>92
     error('The name for this task exceeds the 92 character length limit. Please shorten name.')
 end
+
 
 %% Event Type
 switch event
@@ -92,16 +103,20 @@ switch event
     case 'annotate'
         eventCode = '@EVENT ';
         eventColor = 16711680;
-        % Update CSV annotation log file
 end
 
-%% Sending Comment
+
+%% Sending Comments
+%Event Comment
 for i = 1:numel(onlineNSP)
+
     comment = [eventCode,emuStr];
+
     cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
     disp(comment)
 end
 
+%TaskID Comment
 if strcmp(event,'start')
     for i = 1:numel(onlineNSP)
         comment = ['$TASKID ',filename,suffix{i}];
