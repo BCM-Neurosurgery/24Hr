@@ -50,9 +50,14 @@ onlineNSP = find(availableNSPs==1);
 
 %% Blackrock Filename EMUNumber/Suffix Check
 emuStr = regexp(filename,'EMU-\d+','match');
+emuNum = getNextLogEntry;
+chk1 = sprintf('EMU-%04d_',emuNum);
+chk2 = regexp(filename,'EMU-\d+_','match');
 if isempty(emuStr)
-    [emuNum] = getNextLogEntry;
     emuStr = sprintf('EMU-%04d',emuNum);
+    filename = [emuStr,'_',filename];
+elseif isempty(chk2) || ~strcmp(chk1,chk2{1})
+    error('Incorrect EMU number input to filename!!')
 else
     emuStr = emuStr{1};
 end
@@ -74,7 +79,6 @@ switch event
     case 'start'
         eventCode = '$TASKSTART ';
         eventColor = 65280;
-        setNextLogEntry(filename)
     case 'stop'
         eventCode = '$TASKSTOP ';
         eventColor = 16711935;
@@ -104,6 +108,8 @@ if strcmp(event,'start')
         cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
         disp(comment)
     end
+    setNextLogEntry(filename)
 end
+
 
 end
