@@ -16,7 +16,9 @@
 taskname ='whatever';
 
 %[onlineNSP,~,~]=StartBlackrockAquisition(filename); %changed 02/22/2024 for TOC mode
-%onlineNSP=TaskComment('start',filename,); %changed 02/28/2024 for feature
+
+onlineNSP=TaskComment('start',filename); 
+
 
 %--------------------------------------------------------------------------
 % new block of functions for improved features:
@@ -37,7 +39,9 @@ writeNextLogEntry(); % update the log file: add new emu number and filename
 % STOP
 %
 %StopBlackrockAquisition(filename,onlineNSP); %changed 02/22/2024 for TOC mode
-% TaskComment(filename,'stop'); %changed 02/28/2024 for feature
+
+TaskComment('stop',filename); 
+
 
 TaskComment('stop',filename); 
 writeSuccessLogEntry(1); %update the log file: success flag = 1
@@ -50,9 +54,11 @@ writeSuccessLogEntry(0); %update the log file: success flag = 1
 
 % if you have an abort function, use this to mark the manual stop there:
 TaskComment('kill',filename); 
-writeSuccessLogEntry(0); %update the log file: success flag = 1
 
-%--------------------------------------------------------------------------
+
+% if you have your whole code in a try/catch, place this in the catch
+TaskComment('error',filename); 
+
 
 %% special section: if you are sending comments for trials or other events information between your start and stop
 % here is how you can make sure that these are getting sent to both NSPs

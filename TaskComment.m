@@ -56,16 +56,20 @@ end
 onlineNSP = find(availableNSPs==1);
 
 
-%% Blackrock Filename Prefix/Suffix Check
-% Find prefix from file name:
-% now for testing: hardcoded
-% prefix = regexp(filename,'^[a-zA-Z0-9]+-[a-zA-Z0-9]+','match');
-% if isempty(prefix) || numel(prefix)>1
-%     error('Invalid filename prefix')
-% end
-EMU = '0003';
-subj = 'TEST';
-prefix = {'EMU-',EMU,'_subj-',subj,'_'};
+%% Blackrock Filename EMUNumber/Suffix Check
+emuStr = regexp(filename,'EMU-\d+','match');
+emuNum = getNextLogEntry;
+chk1 = sprintf('EMU-%04d_',emuNum);
+chk2 = regexp(filename,'EMU-\d+_','match');
+if isempty(emuStr)
+    emuStr = sprintf('EMU-%04d',emuNum);
+    filename = [emuStr,'_',filename];
+elseif isempty(chk2) || ~strcmp(chk1,chk2{1})
+    error('Incorrect EMU number input to filename!!')
+else
+    emuStr = emuStr{1};
+end
+
 
 if numel(onlineNSP)==1
     suffix = {[]};
@@ -89,6 +93,7 @@ switch event
     case 'stop'
         eventCode = '$TASKSTOP ';
         eventColor = 16711935;
+%         updateSuccessLogEntry()
     case 'kill'
         eventCode = '$TASKKILL ';
         eventColor = 255;
@@ -104,7 +109,9 @@ end
 %% Sending Comments
 %Event Comment
 for i = 1:numel(onlineNSP)
-    comment = [eventCode,prefix{1}];
+
+    comment = [eventCode,emuStr];
+
     cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
     disp(comment)
 end
@@ -116,6 +123,8 @@ if strcmp(event,'start')
         cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
         disp(comment)
     end
+    setNextLogEntry(filename)
 end
+
 
 end
