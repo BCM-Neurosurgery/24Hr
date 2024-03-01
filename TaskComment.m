@@ -59,6 +59,9 @@ onlineNSP = find(availableNSPs==1);
 %% Blackrock Filename EMUNumber/Suffix Check
 emuStr = regexp(filename,'EMU-\d+','match');
 emuNum = getNextLogEntry;
+if ~strcmp(event,'start')
+    emuNum = emuNum-1;
+end
 chk1 = sprintf('EMU-%04d_',emuNum);
 chk2 = regexp(filename,'EMU-\d+_','match');
 if isempty(emuStr)
@@ -69,7 +72,6 @@ elseif isempty(chk2) || ~strcmp(chk1,chk2{1})
 else
     emuStr = emuStr{1};
 end
-
 
 if numel(onlineNSP)==1
     suffix = {[]};
@@ -109,9 +111,7 @@ end
 %% Sending Comments
 %Event Comment
 for i = 1:numel(onlineNSP)
-
     comment = [eventCode,emuStr];
-
     cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
     disp(comment)
 end
@@ -119,12 +119,12 @@ end
 %TaskID Comment
 if strcmp(event,'start')
     for i = 1:numel(onlineNSP)
+        
         comment = ['$TASKID ',filename,suffix{i}];
         cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
         disp(comment)
     end
     setNextLogEntry(filename)
 end
-
 
 end
