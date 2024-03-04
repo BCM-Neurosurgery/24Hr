@@ -14,7 +14,7 @@ end
         msgbox(message,'More than one file detected','error')
         return
     else
-        T = readtable(fullfile(tableFile.folder,tableFile.name));
+        T = readtable(fullfile(tableFile.folder,tableFile.name),'Delimiter',',');
         
         % New EMU ID
         emu_id_prev = T.emu_id(end);
