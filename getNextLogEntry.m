@@ -15,7 +15,7 @@ function [emu_id,Subj,T] = getNextLogEntry()
         fileParts = split(filename, '_');
         Subj = fileParts{1};
         
-        T = readtable(fullfile(tableFile.folder,tableFile.name));
+        T = readtable(fullfile(tableFile.folder,tableFile.name),'Delimiter',',');
         emu_id_prev = T.emu_id(end);
         emu_id = emu_id_prev + 1;
     end

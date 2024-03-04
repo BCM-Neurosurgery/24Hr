@@ -119,7 +119,6 @@ end
 %TaskID Comment
 if strcmp(event,'start')
     for i = 1:numel(onlineNSP)
-        
         comment = ['$TASKID ',filename,suffix{i}];
         cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
         disp(comment)
