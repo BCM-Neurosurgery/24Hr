@@ -29,3 +29,4 @@ task_id = 'Initialize Log';
 T = cell2table({emu_id,task_id},"VariableNames", ["emu_id","task_id"]);
 logFilename = [subjID,'_log.csv'];
 writetable(T,fullfile(logFolder,logFilename));
+disp(['Log File successfully generated for ',subjID])
