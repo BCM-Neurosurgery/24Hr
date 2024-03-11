@@ -21,6 +21,9 @@ function [onlineNSP] = TaskComment(event,filename)
 % event - a string/char array denoting the type of event this comment is
 %           representing. Available options include 'start','stop','kill',
 %           and 'error'
+%           An additional input of 'getNSPs' has been added to determine
+%           the number of NSPs available and immediately output onlineNSP
+%           without sending a comment to the NSPs
 %
 % OUTPUT
 % onlineNSP - an integer array representing the indices of the NSPs which
@@ -54,6 +57,9 @@ for i=1:length(address)
     availableNSPs(i) = 1;
 end
 onlineNSP = find(availableNSPs==1);
+if strcmp(event,'getNSPs')
+    return
+end
 
 
 %% Blackrock Filename EMUNumber/Suffix Check
