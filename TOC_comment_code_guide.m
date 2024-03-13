@@ -33,7 +33,7 @@ onlineNSP=TaskComment('start',filename);
 % line where they generate the filename (some call it savefname, etc)
 filename = sprintf('EMU-%.4d_subj-%s_task-%s',EMU_number,sbj_code,taskname);
 onlineNSP=TaskComment('start',filename); 
-writeNextLogEntry(); % update the log file: add new emu number and filename
+% update the log file: add new emu number and filename
 %--------------------------------------------------------------------------
 % 
 % STOP
@@ -43,22 +43,11 @@ writeNextLogEntry(); % update the log file: add new emu number and filename
 TaskComment('stop',filename); 
 
 
-TaskComment('stop',filename); 
-writeSuccessLogEntry(1); %update the log file: success flag = 1
-
-% alt: error/manual stop: success flag = 0;
-
 % if you have your whole code in a try/catch, place this in the catch
 TaskComment('error',filename); 
-writeSuccessLogEntry(0); %update the log file: success flag = 1
 
 % if you have an abort function, use this to mark the manual stop there:
 TaskComment('kill',filename); 
-
-
-% if you have your whole code in a try/catch, place this in the catch
-TaskComment('error',filename); 
-
 
 %% special section: if you are sending comments for trials or other events information between your start and stop
 % here is how you can make sure that these are getting sent to both NSPs
