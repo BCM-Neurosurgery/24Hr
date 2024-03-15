@@ -11,7 +11,7 @@ function [onlineNSP] = TaskComment(event,filename)
 % to deliver other commands to both or either instance of Blackrock Central
 %
 % SYNTAX
-% [onlineNSP] = TaskComment(filename,event)
+% [onlineNSP] = TaskComment(event, filename)
 %
 % INPUT
 % filename - a string/char array of the desired filename to be used for any
@@ -119,7 +119,7 @@ end
 for i = 1:numel(onlineNSP)
     comment = [eventCode,emuStr];
     cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
-    disp(comment)
+    fprintf('%s\n',comment)
 end
 
 %TaskID Comment
@@ -127,7 +127,7 @@ if strcmp(event,'start')
     for i = 1:numel(onlineNSP)
         comment = ['$TASKID ',filename,suffix{i}];
         cbmex('comment', eventColor, 0,comment,'instance',onlineNSP(i)-1);
-        disp(comment)
+        fprintf('%s\n',comment)
     end
     setNextLogEntry(filename)
 end
