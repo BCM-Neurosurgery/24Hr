@@ -9,14 +9,24 @@ function checkRecordingStatus()
 % (b) closes the File Storage window, (c) reopens File Storage, and (d)
 % initializes a recording into the directory (hard-coded into function)
 %
+% NOTES
+% The recording check has been contained in an error handling routine. In
+% the event that the check results in an error, the system is reset prior
+% to initializing the recording process
+%
 % SYNTAX
 % checkRecordingStatus()
 %
 % Author: Joshua Adkinson
 
-recording = cbmex('fileconfig');
+try
+    recording = cbmex('fileconfig');
+catch
+    recording = 0;
+    cbmex('system','reset')
+end
 if ~recording
-    warning('Central was not recording! Initiallizing a recording now...')
+    warning('Central was not recording! Initializing a recording now...')
     % Get Recording Path
     [~,subjID] = getNextLogEntry();
     recordingPath = fullfile('D:','DATA',[subjID,'Datafile'],'DATA'); %<-HARDCODED
