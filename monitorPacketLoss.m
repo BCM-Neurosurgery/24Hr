@@ -13,7 +13,7 @@ function monitorPacketLoss()
 % halts the monitoring process.
 % (2) The function has been designed to be very simple in order to allow
 % other users to add other functions that can be called when a packet loss
-% is detected. Inclusion of a backgroud (parallel_ pool to call functions
+% is detected. Inclusion of a background parallel pool to call functions
 % and allow this process to continue monitoring for packet losses is
 % recommended.
 %
@@ -21,7 +21,6 @@ function monitorPacketLoss()
 % monitorPacketLoss()
 %
 % Author: Joshua Adkinson
-
 
 packetLossBoxHandle = msgbox({'Monitoring for packet losses on central.','Close this dialog box to halt monitoring.'},'Packet Loss Monitoring','modal');
 
@@ -50,3 +49,4 @@ while ishandle(packetLossBoxHandle)
     end
 end
 cbmex('trialconfig',0)
+end

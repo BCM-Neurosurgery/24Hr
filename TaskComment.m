@@ -131,5 +131,4 @@ if strcmp(event,'start')
     end
     setNextLogEntry(filename)
 end
-
 end

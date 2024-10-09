@@ -38,3 +38,4 @@ if ~recording
     % Initialize Recording
     cbmex('fileconfig',recordingPath,'',1)
 end
+end
