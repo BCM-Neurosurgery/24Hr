@@ -37,7 +37,7 @@ if nargin==1
 end
 
 %% Get IP Addresses of NSP ethernet ports
-% address = {'192.168.137.3','192.168.137.178'};
+% address = {'192.168.137.1','192.168.137.17'};
 address = getIPAddressesFromPortNames({'NSP1','NSP2'});
 
 
